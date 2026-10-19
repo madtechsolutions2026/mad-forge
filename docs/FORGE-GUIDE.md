@@ -1,5 +1,19 @@
 # Madtech Forge — how your ERP works
 
+## Phase 0: development tooling
+
+This phase makes the code easier to review; it does not redesign the screens or
+change procurement, inventory, production, sales, finance or access rules.
+The readable source, static types and lint checks are developer aids.
+
+Use the generic PowerShell setup in [the README](../README.md). It includes
+formatting/lint commands, Docker Desktop instructions and the separate container
+database. Containers apply the existing migrations at startup and run the app as
+a non-root user. Local runs still bind to loopback by default.
+
+Developer checks use real PostgreSQL fixtures, not the demo company's records.
+See [the Phase 0 report](PHASE-0.md) for results and known verification gaps.
+
 Forge is an operations application for a small manufacturer. It connects the
 office, warehouse, shop floor, and finance team through the same saved records.
 The current product has a React interface, an Express API, and PostgreSQL data.

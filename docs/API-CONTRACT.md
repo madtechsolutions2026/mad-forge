@@ -1,5 +1,14 @@
 # FORGE operations API
 
+## Phase 0 tooling note
+
+Phase 0 changes formatting, development tooling, static frontend types, CI and
+container packaging only. Existing endpoints, request/response JSON, roles,
+idempotency handling, decimal strings and transaction behavior are unchanged.
+Migrations 001-004 remain byte-for-byte unchanged. Container startup invokes the
+existing migration runner before starting the existing server; local startup
+and its loopback default are unchanged.
+
 All endpoints are under `/api/erp`, require the authenticated company session, and return JSON. GET `/workspace` returns the complete current company workspace. All POSTs require a fresh `X-Idempotency-Key` (UUID is convenient); retry the same request with the same key. Reusing a key for different input returns 409. Successful mutations return `{ data: { id, code?, ... }, message }`; refresh `/workspace` after a mutation. Errors return `{status:"error",message}`. Monetary and quantity values are decimal strings, not cents. Currency is INR. IDs are UUID strings. Company is always taken from the authenticated session, never from request bodies.
 
 ## Workspace shape

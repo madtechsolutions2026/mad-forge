@@ -17,7 +17,13 @@ async function main() {
     const after = git(["show", `${revision}:${filename}`]);
     const filepath = path.join(root, filename);
     const options = await prettier.resolveConfig(filepath);
-    const expected = await prettier.format(before, { ...options, filepath });
+    let expected = before;
+    // A preserved method-chain layout can take a second pass to settle; accept formatter output only.
+    for (let pass = 0; pass < 5; pass++) {
+      const formatted = await prettier.format(expected, { ...options, filepath });
+      if (formatted === expected) break;
+      expected = formatted;
+    }
     if (expected !== after) throw new Error(`Non-formatter change found in ${filename}`);
   }
   console.log(`Verified ${entries.length} files: every change is exactly Prettier output from the parent commit.`);
