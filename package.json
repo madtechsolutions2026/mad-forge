@@ -14,7 +14,11 @@
     "dev:web": "node scripts/web.cjs dev",
     "build:api": "tsc",
     "build:web": "node scripts/web.cjs build",
-    "db:seed": "node scripts/seed.cjs"
+    "db:seed": "node scripts/seed.cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . && npm --prefix frontend run lint",
+    "verify:format-commit": "node scripts/verify-format-commit.cjs"
   },
   "keywords": [],
   "type": "commonjs",
@@ -24,11 +28,17 @@
     "pg": "^8.23.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2"
   },
   "private": true
 }

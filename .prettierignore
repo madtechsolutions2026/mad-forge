@@ -1,0 +1,10 @@
+**/node_modules/
+**/dist/
+**/coverage/
+**/package-lock.json
+.git/
+.env
+.env.*
+!.env.example
+.setup-backups/
+database/migrations/
