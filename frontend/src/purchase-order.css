@@ -7,14 +7,14 @@
   align-items: center;
   gap: 12px;
   font-size: 12px;
-  color: #819091;
+  color: var(--muted);
   margin: 0 0 25px;
 }
 .po-breadcrumb button {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #39736c;
+  color: var(--teal-dark);
   min-height: 40px;
   border: 0;
   background: none;
@@ -37,7 +37,7 @@
 }
 .po-heading p {
   font-size: 13px;
-  color: #738a86;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 .po-heading p > span {
@@ -48,7 +48,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #738a86;
+  color: var(--text-secondary);
   background: #eff4f2;
   border: 1px solid #e0e9e5;
   padding: 9px 13px;
@@ -92,7 +92,7 @@
   border-radius: 9px;
   min-width: 38px;
   height: 38px;
-  color: #177f72;
+  color: var(--text-secondary);
 }
 .po-card-heading h2 {
   font-size: 16px;
@@ -103,7 +103,7 @@
 .po-card-heading p {
   font-size: 12px;
   line-height: 1.7;
-  color: #83968d;
+  color: var(--text-secondary);
   margin: 0;
 }
 .po-fields {
@@ -115,12 +115,12 @@
 .po-line label {
   font-size: 12px;
   font-weight: 500;
-  color: #567568;
+  color: var(--text-secondary);
   min-width: 0;
   display: block;
 }
 .po-fields label > span {
-  color: #9aaba2;
+  color: var(--muted);
 }
 .po-fields input,
 .po-fields select,
@@ -133,7 +133,7 @@
   border-radius: 5px;
   padding: 11px 12px;
   background: white;
-  color: #365d4d;
+  color: var(--ink);
   font: inherit;
   font-size: 13px;
   margin-top: 8px;
@@ -147,7 +147,7 @@
 .po-line small {
   display: block;
   font-size: 11px;
-  color: #96a69b;
+  color: var(--muted);
   margin-top: 7px;
   font-weight: 400;
   line-height: 1.6;
@@ -177,7 +177,7 @@
   flex-direction: column;
   gap: 5px;
   font-size: 12px;
-  color: #82988b;
+  color: var(--text-secondary);
   overflow-wrap: anywhere;
 }
 .po-party-preview > div:last-child {
@@ -187,7 +187,7 @@
 .po-party-preview b {
   font-size: 12px;
   font-weight: 600;
-  color: #537061;
+  color: var(--text-secondary);
 }
 .po-party-preview small {
   display: block;
@@ -208,7 +208,7 @@
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  color: #91a297;
+  color: var(--text-secondary);
   border-bottom: 1px solid #e5ece7;
   padding-bottom: 13px;
 }
@@ -228,7 +228,7 @@
   text-align: right;
   align-self: start;
   margin-top: 16px;
-  color: #37594b;
+  color: var(--ink);
   overflow-wrap: anywhere;
 }
 .po-items-card > .btn {
@@ -248,7 +248,7 @@
   letter-spacing: -0.5px;
   line-height: 1.4;
   margin: 15px 0 24px;
-  color: #35584d;
+  color: var(--ink);
 }
 .po-summary dl {
   display: grid;
@@ -263,11 +263,11 @@
   line-height: 1.6;
 }
 .po-summary dt {
-  color: #83958b;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 .po-summary dd {
-  color: #537563;
+  color: var(--ink);
   text-align: right;
   margin: 0;
   font-weight: 500;
@@ -282,7 +282,7 @@
 }
 .po-total > span {
   font-size: 12px;
-  color: #6f8c7a;
+  color: var(--text-secondary);
   display: flex;
   justify-content: space-between;
 }
@@ -292,13 +292,13 @@
 .po-total strong {
   font-size: 28px;
   letter-spacing: -1px;
-  color: #28634e;
+  color: var(--ink);
   overflow-wrap: anywhere;
 }
 .po-fine {
   font-size: 11px;
   line-height: 1.8;
-  color: #8b9d91;
+  color: var(--text-secondary);
   white-space: pre-line;
 }
 .po-summary > .btn {
@@ -317,7 +317,7 @@
   justify-content: center;
   font-size: 10px;
   line-height: 1.6;
-  color: #8a9c8e;
+  color: var(--text-success);
   margin-top: 17px;
 }
 .po-summary-tip {
@@ -326,7 +326,7 @@
   border-top: 1px solid #e6ede7;
   margin-top: 22px;
   padding-top: 19px;
-  color: #81a28c;
+  color: var(--text-success);
 }
 .po-summary-tip > svg {
   flex-shrink: 0;
@@ -372,7 +372,7 @@
   font-size: 27px;
   font-weight: 700;
   letter-spacing: -1px;
-  color: #1a7c6e;
+  color: var(--teal-dark);
   display: block;
   margin-bottom: 20px;
 }
@@ -380,7 +380,7 @@
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 1.2px;
-  color: #8ba094;
+  color: var(--text-secondary);
 }
 .po-document h2 {
   font-size: 17px;
@@ -389,7 +389,7 @@
 .po-document p {
   font-size: 12px;
   line-height: 1.8;
-  color: #7b9284;
+  color: var(--text-secondary);
   white-space: pre-line;
   margin: 4px 0;
   overflow-wrap: anywhere;
@@ -402,7 +402,7 @@
   font-size: 22px;
   font-weight: 600;
   margin: 15px 0 19px;
-  color: #38614e;
+  color: var(--ink);
 }
 .po-document-parties {
   display: grid;
@@ -423,7 +423,7 @@
   margin: 22px 0 27px;
 }
 .po-document-meta dt {
-  color: #95a498;
+  color: var(--muted);
   font-size: 10px;
   margin-bottom: 8px;
 }
@@ -444,7 +444,7 @@
 .po-document-table th {
   font-size: 9px;
   letter-spacing: 0.5px;
-  color: #7f9686;
+  color: var(--text-secondary);
   background: #f0f5f1;
   padding: 13px 10px;
   white-space: nowrap;
@@ -457,13 +457,13 @@
   font-size: 12px;
   padding: 18px 10px;
   border-bottom: 1px solid #e7ede8;
-  color: #58755f;
+  color: var(--ink);
   vertical-align: top;
 }
 .po-document-table td small {
   display: block;
   font-size: 10px;
-  color: #95a591;
+  color: var(--muted);
   margin-top: 6px;
 }
 .po-document-total {
@@ -473,12 +473,12 @@
   gap: 30px;
   padding: 25px 0;
   font-size: 12px;
-  color: #7f9685;
+  color: var(--text-secondary);
 }
 .po-document-total strong {
   font-size: 26px;
   letter-spacing: -0.8px;
-  color: #2b6350;
+  color: var(--ink);
 }
 .po-document-notes {
   border-top: 1px solid #e5ece6;
@@ -496,7 +496,7 @@
   padding-top: 18px;
   border-top: 1px solid #e4ece5;
   font-size: 9px;
-  color: #99aa9b;
+  color: var(--muted);
 }
 .po-status-card {
   padding: 24px;
@@ -510,7 +510,7 @@
 }
 .po-status-card h3 span {
   float: right;
-  color: #829a86;
+  color: var(--text-secondary);
 }
 .po-received-lines {
   display: grid;
@@ -522,12 +522,12 @@
 }
 .po-received-lines strong {
   font-size: 12px;
-  color: #52735d;
+  color: var(--ink);
 }
 .po-received-lines span,
 .po-received-lines small {
   font-size: 11px;
-  color: #8da18d;
+  color: var(--muted);
   line-height: 1.6;
 }
 .po-received-lines progress {
@@ -542,12 +542,12 @@
   font-size: 11px;
   padding: 13px 0;
   border-top: 1px solid #e7ede7;
-  color: #8a9e89;
+  color: var(--text-secondary);
 }
 .po-receipt b,
 .po-receipt strong {
   font-weight: 500;
-  color: #567b5e;
+  color: var(--ink);
 }
 .po-bottom-actions {
   display: flex;
@@ -592,7 +592,7 @@
     display: block;
     font-size: 10px;
     margin-bottom: 8px;
-    color: #8d9f91;
+    color: var(--text-secondary);
   }
   .po-line select,
   .po-line input {
@@ -602,7 +602,7 @@
     content: "Line value  ";
     font-size: 10px;
     font-weight: 400;
-    color: #9aad9b;
+    color: var(--text-secondary);
   }
   .po-heading {
     align-items: flex-start;
