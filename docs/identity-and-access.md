@@ -4,15 +4,15 @@ Forge uses PostgreSQL-backed sessions. The browser holds an opaque 256-bit rando
 
 ## Endpoints
 
-| Method | Path | Body / result |
-| --- | --- | --- |
-| POST | /api/auth/register | `{name,email,password,companyName}`; creates the account, company, owner membership, and session atomically |
-| POST | /api/auth/login | `{email,password}` |
-| GET | /api/auth/me | Current identity and available companies |
-| POST | /api/auth/logout | Revokes the current server-side session |
-| GET | /api/auth/members | Workspace members as `{members:[{id,name,email,role,createdAt}]}` |
-| POST | /api/auth/members | Owner/admin: `{name,email,password,role}` creates a member. Existing accounts can be added with email and role; their name/password are preserved |
-| PATCH | /api/auth/members/:userId | Owner/admin: `{role}` updates a member's workspace role |
+| Method | Path                      | Body / result                                                                                                                                     |
+| ------ | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | /api/auth/register        | `{name,email,password,companyName}`; creates the account, company, owner membership, and session atomically                                       |
+| POST   | /api/auth/login           | `{email,password}`                                                                                                                                |
+| GET    | /api/auth/me              | Current identity and available companies                                                                                                          |
+| POST   | /api/auth/logout          | Revokes the current server-side session                                                                                                           |
+| GET    | /api/auth/members         | Workspace members as `{members:[{id,name,email,role,createdAt}]}`                                                                                 |
+| POST   | /api/auth/members         | Owner/admin: `{name,email,password,role}` creates a member. Existing accounts can be added with email and role; their name/password are preserved |
+| PATCH  | /api/auth/members/:userId | Owner/admin: `{role}` updates a member's workspace role                                                                                           |
 
 Login, registration and `/me` return `{user:{id,name,email},companies:[{id,name,role}],csrfToken}`. The frontend sends `credentials: "include"`. Authenticated writes send `X-CSRF-Token`. Workspace APIs also send `X-Company-Id`; the backend verifies membership instead of trusting that header. Stock and document postings use a separate idempotency key.
 

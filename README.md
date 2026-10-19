@@ -22,17 +22,16 @@ Open **http://127.0.0.1:3030**. The login page has an **Explore demo workspace**
 button. Demo seeding is explicit, development-only, repeat-safe, and does not
 clear business documents.
 
-| Development demo | Email | Password |
-| --- | --- | --- |
-| Owner | demo@madtech.local | ForgeDemo@2026! |
+| Development demo | Email                | Password        |
+| ---------------- | -------------------- | --------------- |
+| Owner            | demo@madtech.local   | ForgeDemo@2026! |
 | Read-only viewer | viewer@madtech.local | ForgeDemo@2026! |
 
 These are deliberately public development-demo credentials, not deployment
 accounts. Sign-up creates a new account and a separate, empty company.
 
 For development, run `npm run dev` for the API and `npm run dev:web` in another
-terminal for the interface at port 5176. The frontend proxy calls the API at
-3030. Stop development mode before running `npm start` on the same port.
+terminal for the interface at port 5176. The frontend proxy calls the API at 3030. Stop development mode before running `npm start` on the same port.
 
 ## Connected workflows
 

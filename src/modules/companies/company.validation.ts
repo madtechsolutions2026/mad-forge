@@ -51,10 +51,7 @@ export function validateCompanyInput(body: unknown): CreateCompanyInput {
 }
 
 export function validateCompanyId(value: unknown): string {
-  if (
-    typeof value !== "string" ||
-    !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
-  ) {
+  if (typeof value !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
     throw new AppError(400, "Company ID must be a valid UUID.");
   }
   return value;

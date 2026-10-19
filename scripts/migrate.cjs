@@ -20,9 +20,7 @@ async function migrate() {
 
   try {
     const directory = path.join(root, "database", "migrations");
-    const files = (await fs.readdir(directory))
-      .filter((file) => /^\d+_[a-z0-9_]+\.sql$/i.test(file))
-      .sort();
+    const files = (await fs.readdir(directory)).filter((file) => /^\d+_[a-z0-9_]+\.sql$/i.test(file)).sort();
 
     client = await pool.connect();
     await client.query("BEGIN");
@@ -38,9 +36,7 @@ async function migrate() {
       )
     `);
 
-    const history = await client.query(
-      "SELECT filename, checksum FROM public._mad_erp_migrations"
-    );
+    const history = await client.query("SELECT filename, checksum FROM public._mad_erp_migrations");
     const applied = new Map(history.rows.map((row) => [row.filename, row.checksum]));
     const messages = [];
 
@@ -52,9 +48,7 @@ async function migrate() {
 
     for (const filename of files) {
       const sql = await fs.readFile(path.join(directory, filename), "utf8");
-      const checksum = createHash("sha256")
-        .update(sql.replace(/\r\n/g, "\n"))
-        .digest("hex");
+      const checksum = createHash("sha256").update(sql.replace(/\r\n/g, "\n")).digest("hex");
 
       if (applied.has(filename)) {
         if (applied.get(filename) !== checksum) {
@@ -65,10 +59,10 @@ async function migrate() {
       }
 
       await client.query(sql);
-      await client.query(
-        "INSERT INTO public._mad_erp_migrations (filename, checksum) VALUES ($1, $2)",
-        [filename, checksum]
-      );
+      await client.query("INSERT INTO public._mad_erp_migrations (filename, checksum) VALUES ($1, $2)", [
+        filename,
+        checksum,
+      ]);
       messages.push(`Applied: ${filename}`);
     }
 

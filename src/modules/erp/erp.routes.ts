@@ -16,10 +16,28 @@ erpRouter.post("/warehouses", async (req, res) => {
   res.status(201).json(await write(req, "masters", service.createWarehouse, "Warehouse created"));
 });
 erpRouter.post("/suppliers", async (req, res) => {
-  res.status(201).json(await write(req, "masters", (client, w, input) => service.createParty(client, w, input, "supplier"), "Supplier added"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "masters",
+        (client, w, input) => service.createParty(client, w, input, "supplier"),
+        "Supplier added",
+      ),
+    );
 });
 erpRouter.post("/customers", async (req, res) => {
-  res.status(201).json(await write(req, "masters", (client, w, input) => service.createParty(client, w, input, "customer"), "Customer added"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "masters",
+        (client, w, input) => service.createParty(client, w, input, "customer"),
+        "Customer added",
+      ),
+    );
 });
 erpRouter.post("/inventory/adjustments", async (req, res) => {
   res.status(201).json(await write(req, "warehouse", service.adjustStock, "Stock adjustment posted"));
@@ -29,11 +47,29 @@ erpRouter.post("/purchase-orders", async (req, res) => {
 });
 erpRouter.post("/purchase-orders/:id/receive", async (req, res) => {
   const orderId = routeId(req);
-  res.status(201).json(await write(req, "warehouse", (client, w, input) => service.receivePurchaseOrder(client, w, input, orderId), "Goods received and stock updated"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "warehouse",
+        (client, w, input) => service.receivePurchaseOrder(client, w, input, orderId),
+        "Goods received and stock updated",
+      ),
+    );
 });
 erpRouter.post("/receipts/:id/bill", async (req, res) => {
   const receiptId = routeId(req);
-  res.status(201).json(await write(req, "finance", (client, w, input) => service.createBill(client, w, input, receiptId, "payable"), "Supplier bill posted"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "finance",
+        (client, w, input) => service.createBill(client, w, input, receiptId, "payable"),
+        "Supplier bill posted",
+      ),
+    );
 });
 erpRouter.post("/payments", async (req, res) => {
   res.status(201).json(await write(req, "finance", service.recordPayment, "Payment recorded"));
@@ -46,22 +82,54 @@ erpRouter.post("/work-orders", async (req, res) => {
 });
 erpRouter.post("/work-orders/:id/start", async (req, res) => {
   const workOrderId = routeId(req);
-  res.json(await write(req, "production", (client, w, input) => service.startWorkOrder(client, w, input, workOrderId), "Production started and material issued"));
+  res.json(
+    await write(
+      req,
+      "production",
+      (client, w, input) => service.startWorkOrder(client, w, input, workOrderId),
+      "Production started and material issued",
+    ),
+  );
 });
 erpRouter.post("/work-orders/:id/complete", async (req, res) => {
   const workOrderId = routeId(req);
-  res.json(await write(req, "production", (client, w, input) => service.completeWorkOrder(client, w, input, workOrderId), "Production completed and accepted output stocked"));
+  res.json(
+    await write(
+      req,
+      "production",
+      (client, w, input) => service.completeWorkOrder(client, w, input, workOrderId),
+      "Production completed and accepted output stocked",
+    ),
+  );
 });
 erpRouter.post("/sales-orders", async (req, res) => {
   res.status(201).json(await write(req, "sales", service.createSalesOrder, "Sales order confirmed and stock reserved"));
 });
 erpRouter.post("/sales-orders/:id/dispatch", async (req, res) => {
   const orderId = routeId(req);
-  res.status(201).json(await write(req, "warehouse", (client, w, input) => service.dispatchSalesOrder(client, w, input, orderId), "Order dispatched and stock updated"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "warehouse",
+        (client, w, input) => service.dispatchSalesOrder(client, w, input, orderId),
+        "Order dispatched and stock updated",
+      ),
+    );
 });
 erpRouter.post("/dispatches/:id/invoice", async (req, res) => {
   const dispatchId = routeId(req);
-  res.status(201).json(await write(req, "finance", (client, w, input) => service.createBill(client, w, input, dispatchId, "receivable"), "Customer invoice posted"));
+  res
+    .status(201)
+    .json(
+      await write(
+        req,
+        "finance",
+        (client, w, input) => service.createBill(client, w, input, dispatchId, "receivable"),
+        "Customer invoice posted",
+      ),
+    );
 });
 erpRouter.post("/expenses", async (req, res) => {
   res.status(201).json(await write(req, "finance", service.createExpense, "Expense recorded"));

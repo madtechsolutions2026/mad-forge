@@ -5,7 +5,7 @@ import { Pool } from "pg";
 export const pool = new Pool({
   max: 5,
   connectionTimeoutMillis: 3000,
-  query_timeout: 3000
+  query_timeout: 3000,
 });
 
 pool.on("error", (error) => {

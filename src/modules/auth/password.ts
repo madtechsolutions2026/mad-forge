@@ -17,7 +17,13 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   const parts = hash.split("$");
-  if (parts.length !== 6 || parts.slice(0, 4).join("$") !== "scrypt$32768$8$3" || !/^[a-f0-9]{32}$/.test(parts[4]!) || !/^[a-f0-9]{128}$/.test(parts[5]!)) return false;
+  if (
+    parts.length !== 6 ||
+    parts.slice(0, 4).join("$") !== "scrypt$32768$8$3" ||
+    !/^[a-f0-9]{32}$/.test(parts[4]!) ||
+    !/^[a-f0-9]{128}$/.test(parts[5]!)
+  )
+    return false;
   const key = await derive(password, parts[4]!);
   return timingSafeEqual(key, Buffer.from(parts[5]!, "hex"));
 }

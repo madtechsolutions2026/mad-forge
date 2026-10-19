@@ -21,5 +21,5 @@ readPort(process.env.PGPORT, 5432, "PGPORT");
 
 export const env = Object.freeze({
   port: readPort(process.env.PORT, 3030, "PORT"),
-  host: process.env.HOST?.trim() || "127.0.0.1"
+  host: process.env.HOST?.trim() || "127.0.0.1",
 });

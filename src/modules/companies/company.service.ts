@@ -11,10 +11,10 @@ export async function createCompany(body: unknown, userId: string): Promise<Comp
   try {
     await client.query("BEGIN");
     const company = await insertCompany(randomUUID(), input, client);
-    await client.query(
-      "INSERT INTO public.company_memberships (user_id, company_id, role) VALUES ($1, $2, 'owner')",
-      [userId, company.id]
-    );
+    await client.query("INSERT INTO public.company_memberships (user_id, company_id, role) VALUES ($1, $2, 'owner')", [
+      userId,
+      company.id,
+    ]);
     await client.query("COMMIT");
     return company;
   } catch (error) {

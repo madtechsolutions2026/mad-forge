@@ -7,7 +7,7 @@ export async function createCompany(req: Request, res: Response): Promise<void> 
   const company = await companyService.createCompany(req.body, req.auth.userId);
   res.location(`/api/companies/${company.id}`).status(201).json({
     status: "ok",
-    data: company
+    data: company,
   });
 }
 

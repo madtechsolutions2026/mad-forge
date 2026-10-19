@@ -18,4 +18,7 @@ async function main() {
     await pool.end();
   }
 }
-main().catch((error) => { console.error(error.message); process.exitCode = 1; });
+main().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});

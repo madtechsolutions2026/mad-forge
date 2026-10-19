@@ -37,10 +37,10 @@ function shutdown(signal: string): void {
         clearTimeout(timeout);
         console.error(
           "Database shutdown error:",
-          databaseError instanceof Error ? databaseError.message : "Unknown error"
+          databaseError instanceof Error ? databaseError.message : "Unknown error",
         );
         process.exitCode = 1;
-      }
+      },
     );
   });
 

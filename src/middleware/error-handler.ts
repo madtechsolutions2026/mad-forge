@@ -11,7 +11,7 @@ export const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, nex
     res.status(error.status).json({
       status: "error",
       message: error.message,
-      ...(error.errors ? { errors: error.errors } : {})
+      ...(error.errors ? { errors: error.errors } : {}),
     });
     return;
   }
@@ -28,10 +28,7 @@ export const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, nex
       : 500;
 
   if (status >= 500) {
-    console.error(
-      "Unhandled request error:",
-      error instanceof Error ? error.message : "Unknown error"
-    );
+    console.error("Unhandled request error:", error instanceof Error ? error.message : "Unknown error");
   }
 
   const message =

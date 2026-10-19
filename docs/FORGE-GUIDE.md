@@ -83,12 +83,12 @@ Sales order -> Stock reservation -> Dispatch -> Invoice -> Collection
 
 ## The inventory numbers
 
-| Number | Meaning |
-| --- | --- |
-| On hand | Quantity physically recorded in the warehouse |
-| Reserved | Quantity promised to confirmed sales orders |
-| Available | On hand minus reserved |
-| Reorder level | Your threshold for replenishing an item |
+| Number        | Meaning                                       |
+| ------------- | --------------------------------------------- |
+| On hand       | Quantity physically recorded in the warehouse |
+| Reserved      | Quantity promised to confirmed sales orders   |
+| Available     | On hand minus reserved                        |
+| Reorder level | Your threshold for replenishing an item       |
 
 For example: 1,000 plates on hand and 300 reserved means 700 available.
 
@@ -117,14 +117,14 @@ product phases. Do not treat operational invoice totals as accounting profit.
 
 ## People and access
 
-| Role | Main responsibility |
-| --- | --- |
-| Owner / admin | Manage the workspace and its operations |
-| Purchasing | Suppliers, material catalogue, and purchase/sales orders |
-| Warehouse | Goods receipts, stock adjustments, and dispatches |
-| Production | Recipes, work orders, material issues, and completion |
-| Finance | Bills, invoices, payment records, and expenses |
-| Viewer | Read workspace data; cannot post changes |
+| Role          | Main responsibility                                      |
+| ------------- | -------------------------------------------------------- |
+| Owner / admin | Manage the workspace and its operations                  |
+| Purchasing    | Suppliers, material catalogue, and purchase/sales orders |
+| Warehouse     | Goods receipts, stock adjustments, and dispatches        |
+| Production    | Recipes, work orders, material issues, and completion    |
+| Finance       | Bills, invoices, payment records, and expenses           |
+| Viewer        | Read workspace data; cannot post changes                 |
 
 These are starter roles, with shared read access inside a permitted company.
 Use **Workspace → Team** to add people or change a member's role. New accounts
@@ -162,15 +162,15 @@ flowchart LR
     B --> F
 ```
 
-| Location | What it contains |
-| --- | --- |
-| `frontend/src` | Screens, forms, tables, styling, API client |
-| `src/modules/auth` | Registration, login, sessions, memberships, team access |
-| `src/modules/companies` | Company profiles |
-| `src/modules/erp` | Business rules, postings, and workspace reads |
-| `database/migrations` | Saved SQL changes, applied in order |
-| `scripts/seed*.cjs` | Explicit development demonstration data |
-| `tests/integration` | Tests against real PostgreSQL and HTTP APIs |
+| Location                | What it contains                                        |
+| ----------------------- | ------------------------------------------------------- |
+| `frontend/src`          | Screens, forms, tables, styling, API client             |
+| `src/modules/auth`      | Registration, login, sessions, memberships, team access |
+| `src/modules/companies` | Company profiles                                        |
+| `src/modules/erp`       | Business rules, postings, and workspace reads           |
+| `database/migrations`   | Saved SQL changes, applied in order                     |
+| `scripts/seed*.cjs`     | Explicit development demonstration data                 |
+| `tests/integration`     | Tests against real PostgreSQL and HTTP APIs             |
 
 The browser requests an action. The API checks access and input, then the
 service posts all related database changes in one transaction. If a step fails,

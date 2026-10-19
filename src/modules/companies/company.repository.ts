@@ -7,7 +7,7 @@ export async function insertCompany(id: string, input: CreateCompanyInput, clien
     `INSERT INTO public.companies (id, name, address, phone)
      VALUES ($1, $2, $3, $4)
      RETURNING id, name, address, phone, created_at, updated_at`,
-    [id, input.name, input.address, input.phone]
+    [id, input.name, input.address, input.phone],
   );
   return result.rows[0]!;
 }
@@ -17,7 +17,7 @@ export async function findCompanyById(id: string): Promise<Company | undefined> 
     `SELECT id, name, address, phone, created_at, updated_at
      FROM public.companies
      WHERE id = $1`,
-    [id]
+    [id],
   );
   return result.rows[0];
 }
