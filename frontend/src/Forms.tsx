@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { ArrowRight, Boxes, CircleHelp, PackageCheck, Plus, Trash2 } from "lucide-react";
-import type { ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import { Button, Dialog } from "./components";
 import { dueIn30Days, money, number, quantitySubtract, today } from "./format";
-import type { Workspace } from "./types";
+import type { DialogRecord, Line, Workspace } from "./types";
 
-export type Action = { type: string; record?: any };
+export type Action = { type: string; record?: DialogRecord };
 type InputLine = { key: string; itemId: string; quantity: string; unitPrice: string };
 const titles: Record<string, string> = {
   item: "Create an item",
@@ -60,7 +60,9 @@ export function FormDialog({
   onClose: () => void;
   onSubmit: (path: string, body: unknown, key: string) => Promise<void>;
 }) {
-  const r = action.record;
+  // TODO(why): record-dependent actions are guarded by their callers; retain their dispatch
+  // behavior until Action becomes a discriminated union instead of adding runtime checks here.
+  const r = action.record!;
   const type = action.type;
   const [values, setValues] = useState<Record<string, string>>({
     kind: "raw",
@@ -78,7 +80,7 @@ export function FormDialog({
     labourCost: "0",
     method: "bank",
     billId: type === "payment" ? (r?.id ?? w.bills.find((b) => Number(b.balance) > 0)?.id ?? "") : "",
-    amount: type === "payment" && r ? r.balance : "",
+    amount: type === "payment" && r ? (r.balance as string) : "",
     dueDate: dueIn30Days(),
     expenseDate: today(),
     category: "Utilities",
@@ -98,7 +100,7 @@ export function FormDialog({
   ]);
   const [quantities, setQuantities] = useState<Record<string, string>>(
     Object.fromEntries(
-      (r?.lines ?? []).map((line: any) => [
+      (r?.lines ?? []).map((line: Line) => [
         line.id ?? line.itemId,
         type === "receive"
           ? quantitySubtract(line.quantity, line.receivedQuantity ?? "0")
@@ -112,7 +114,7 @@ export function FormDialog({
   const [error, setError] = useState("");
   const attempt = useRef({ body: "", key: "" });
   const set = (key: string, value: string) => setValues((v) => ({ ...v, [key]: value }));
-  const input = (key: string, options: Record<string, any> = {}) => (
+  const input = (key: string, options: InputHTMLAttributes<HTMLInputElement> = {}) => (
     <input value={values[key] ?? ""} onChange={(event) => set(key, event.target.value)} {...options} />
   );
   const select = (key: string, options: { id: string; name: string }[]) => (
@@ -133,7 +135,7 @@ export function FormDialog({
   const payloadLines = lines.map(({ itemId, quantity, unitPrice }) =>
     type === "bom" ? { itemId, quantity } : { itemId, quantity, unitPrice },
   );
-  const displayedLines = (r?.lines ?? []).filter((line: any) =>
+  const displayedLines = (r?.lines ?? []).filter((line: Line) =>
     type === "receive"
       ? quantitySubtract(line.quantity, line.receivedQuantity ?? "0") !== "0"
       : type === "dispatch"
@@ -146,7 +148,7 @@ export function FormDialog({
     event.preventDefault();
     setError("");
     let path = "",
-      body: any;
+      body!: Record<string, unknown>;
     if (type === "item") {
       path = "/items";
       body = {
@@ -185,11 +187,11 @@ export function FormDialog({
       path = type === "receive" ? `/purchase-orders/${r.id}/receive` : `/sales-orders/${r.id}/dispatch`;
       body = {
         lines: displayedLines
-          .filter((line: any) => Number(quantities[line.id]) > 0)
-          .map((line: any) => ({ lineId: line.id, quantity: quantities[line.id] })),
+          .filter((line: Line) => Number(quantities[line.id]) > 0)
+          .map((line: Line) => ({ lineId: line.id, quantity: quantities[line.id] })),
         note: values.note || undefined,
       };
-      if (!body.lines.length) return setError("Enter a quantity for at least one item.");
+      if (!(body.lines as unknown[]).length) return setError("Enter a quantity for at least one item.");
     }
     if (type === "bill" || type === "invoice") {
       path = type === "bill" ? `/receipts/${r.id}/bill` : `/dispatches/${r.id}/invoice`;
@@ -218,8 +220,8 @@ export function FormDialog({
         rejectedQuantity: values.rejectedQuantity,
         labourCost: values.labourCost,
         returns: (r.lines ?? [])
-          .filter((line: any) => Number(quantities[line.itemId]) > 0)
-          .map((line: any) => ({ itemId: line.itemId, quantity: quantities[line.itemId] })),
+          .filter((line: Line) => Number(quantities[line.itemId]) > 0)
+          .map((line: Line) => ({ itemId: line.itemId, quantity: quantities[line.itemId] })),
       };
     }
     if (type === "expense") {
@@ -361,7 +363,7 @@ export function FormDialog({
                     <Boxes size={18} />
                     <div>
                       <strong>Material requirement</strong>
-                      {selectedBom.lines.map((line: any) => (
+                      {selectedBom.lines.map((line: Line) => (
                         <span key={line.itemId}>
                           {line.itemName}: {number(Number(line.quantity) * Number(values.plannedQuantity || 0))}{" "}
                           {line.unit}
@@ -382,7 +384,7 @@ export function FormDialog({
                   {number(r.plannedQuantity)} planned units · {r.warehouseName}
                 </p>
                 <div>
-                  {r.lines.map((line: any) => (
+                  {r.lines!.map((line: Line) => (
                     <div className="summary-row" key={line.itemId}>
                       <span>{line.itemName}</span>
                       <strong>
@@ -421,7 +423,7 @@ export function FormDialog({
                   <h4 className="field-heading">
                     Return unused raw materials <span>Optional</span>
                   </h4>
-                  {r.lines.map((line: any) => (
+                  {r.lines!.map((line: Line) => (
                     <div className="quantity-row" key={line.itemId}>
                       <div>
                         <strong>{line.itemName}</strong>
@@ -657,7 +659,7 @@ export function FormDialog({
           )}
           {["receive", "dispatch"].includes(type) && (
             <div className="receipt-lines">
-              {displayedLines.map((line: any) => {
+              {displayedLines.map((line: Line) => {
                 const remaining = quantitySubtract(
                   line.quantity,
                   (type === "receive" ? line.receivedQuantity : line.dispatchedQuantity) ?? "0",

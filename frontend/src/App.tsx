@@ -39,7 +39,7 @@ import type { Action } from "./Forms";
 import { date, label, money, number, relative } from "./format";
 import { Finance, Inventory, Overview, Procurement, Production, Sales, WorkspacePage } from "./Pages";
 import type { PageProps } from "./Pages";
-import type { Page, Session, Workspace } from "./types";
+import type { DialogRecord, Line, Page, Session, Workspace } from "./types";
 
 const purchasePath = () => {
   const match = location.hash.match(/^#procurement\/purchase\/(new|[0-9a-f-]{36})$/i);
@@ -119,7 +119,7 @@ export default function App() {
   const [activity, setActivity] = useState(false);
   const [account, setAccount] = useState(false);
   const [action, setAction] = useState<Action | null>(null);
-  const [details, setDetails] = useState<{ record: any; type: string } | null>(null);
+  const [details, setDetails] = useState<{ record: DialogRecord; type: string } | null>(null);
   const [toast, setToast] = useState<{ text: string; error?: boolean } | null>(null);
   const main = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -226,7 +226,7 @@ export default function App() {
     if (next.type === "purchase") openPurchase();
     else setAction(next);
   };
-  const openDetail = (record: any, type: string) => {
+  const openDetail = (record: DialogRecord, type: string) => {
     if (type === "purchase") openPurchase(record.id);
     else setDetails({ record, type });
   };
@@ -810,7 +810,7 @@ function LoadingWorkspace() {
   );
 }
 
-function DetailDialog({ record: r, type, onClose }: { record: any; type: string; onClose: () => void }) {
+function DetailDialog({ record: r, type, onClose }: { record: DialogRecord; type: string; onClose: () => void }) {
   const lines = r.lines ?? [];
   const isWork = type === "workorder";
   const fields = [
@@ -850,7 +850,7 @@ function DetailDialog({ record: r, type, onClose }: { record: any; type: string;
               {type === "bom" ? "Materials per finished unit" : isWork ? "Raw material consumption" : "Line items"}
             </h3>
             <div className="detail-lines">
-              {lines.map((line: any, index: number) => (
+              {lines.map((line: Line, index: number) => (
                 <div key={line.id ?? line.itemId ?? index}>
                   <div>
                     <strong>{line.itemName}</strong>
@@ -953,7 +953,7 @@ function CommandPalette({
   w: Workspace | null;
   navigate: (page: Page) => void;
   openAction: (action: Action) => void;
-  detail: (record: any, type: string) => void;
+  detail: (record: DialogRecord, type: string) => void;
   can: (action: string) => boolean;
   onClose: () => void;
 }) {

@@ -39,13 +39,13 @@ import { Badge, Button, Empty, Metric, Panel, Progress, SearchField, Table, Tabs
 import { Team } from "./Team";
 import { date, label, money, number, quantityScaled, relative } from "./format";
 import type { Action } from "./Forms";
-import type { Bill, Document, Entity, Page, Session, Workspace, WorkOrder } from "./types";
+import type { Bill, DialogRecord, Document, Entity, Line, Page, Party, Session, Workspace, WorkOrder } from "./types";
 
 export type PageProps = {
   w: Workspace;
   session: Session;
   openAction: (action: Action) => void;
-  detail: (record: any, type: string) => void;
+  detail: (record: DialogRecord, type: string) => void;
   navigate: (page: Page) => void;
   can: (action: string) => boolean;
 };
@@ -656,7 +656,7 @@ export function Procurement({ w, openAction, detail, can }: PageProps) {
   );
 }
 
-function PartyTable({ rows, detail }: { rows: Entity[]; detail: (record: any) => void }) {
+function PartyTable({ rows, detail }: { rows: Party[]; detail: (record: Party) => void }) {
   return (
     <Table
       rows={rows}
@@ -1241,7 +1241,7 @@ export function Production({ w, openAction, detail, can }: PageProps) {
                   <h3>{bom.productName}</h3>
                   <p>{bom.name}</p>
                   <div className="bom-materials">
-                    {bom.lines.slice(0, 3).map((line: any) => (
+                    {bom.lines.slice(0, 3).map((line: Line) => (
                       <div key={line.itemId}>
                         <span>{line.itemName}</span>
                         <strong>

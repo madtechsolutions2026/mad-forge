@@ -1,5 +1,5 @@
 export type Page = "overview" | "procurement" | "inventory" | "production" | "sales" | "finance" | "workspace";
-export type Entity = { id: string; [key: string]: any };
+export type Entity = { id: string };
 export type Company = { id: string; name: string; role: string; address?: string; phone?: string };
 export type Session = { user: { id: string; name: string; email: string }; companies: Company[]; csrfToken: string };
 export type Item = Entity & {
@@ -53,6 +53,12 @@ export type Document = Entity & {
   total: string;
   createdAt: string;
   lines: Line[];
+  orderDate?: string;
+  expectedDate?: string | null;
+  supplierReference?: string | null;
+  paymentTerms?: string | null;
+  deliveryAddress?: string | null;
+  notes?: string | null;
 };
 export type Receipt = Document & { purchaseOrderId: string; purchaseOrderCode: string; billId: string | null };
 export type Dispatch = Document & { salesOrderId: string; salesOrderCode: string; invoiceId: string | null };
@@ -96,6 +102,40 @@ export type Activity = Entity & {
   description: string;
   createdAt: string;
 };
+export type Payment = Entity & {
+  code: string;
+  billId: string;
+  billCode: string;
+  direction: Bill["direction"];
+  partyName: string;
+  amount: string;
+  method: "bank" | "cash" | "upi";
+  note: string | null;
+  createdAt: string;
+};
+export type Expense = Entity & {
+  code: string;
+  category: string;
+  description: string;
+  amount: string;
+  expenseDate: string;
+  createdAt: string;
+};
+export type StockMovement = Entity & {
+  itemId: string;
+  itemName: string;
+  warehouseId: string;
+  warehouseName: string;
+  quantity: string;
+  unitCost: string;
+  movement: string;
+  referenceCode: string | null;
+  note: string | null;
+  createdAt: string;
+};
+// TODO(why): the legacy generic dialogs accept several record kinds; use a discriminated union
+// when those forms are separated, rather than changing their dispatch behavior in Phase 0.
+export type DialogRecord = Entity & Partial<Item & Party & Document & Bill & Bom & WorkOrder>;
 export type Workspace = {
   company: Company;
   summary: {
@@ -115,15 +155,15 @@ export type Workspace = {
   suppliers: Party[];
   customers: Party[];
   inventory: Stock[];
-  stockLedger: Entity[];
+  stockLedger: StockMovement[];
   purchaseOrders: Document[];
   receipts: Receipt[];
   bills: Bill[];
-  payments: Entity[];
+  payments: Payment[];
   boms: Bom[];
   workOrders: WorkOrder[];
   salesOrders: Document[];
   dispatches: Dispatch[];
-  expenses: Entity[];
+  expenses: Expense[];
   activity: Activity[];
 };

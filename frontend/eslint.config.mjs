@@ -20,8 +20,8 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/App.tsx", "src/Forms.tsx"],
-    // The legacy polymorphic record boundaries have TODOs until they become discriminated unions.
-    rules: { "@typescript-eslint/no-explicit-any": "off" },
+    files: ["src/purchase-export.ts"],
+    // The existing CSV injection guard must recognize leading control characters.
+    rules: { "no-control-regex": "off" },
   },
 );
